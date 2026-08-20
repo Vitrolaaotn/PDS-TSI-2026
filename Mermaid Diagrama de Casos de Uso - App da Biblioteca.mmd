@@ -1,0 +1,29 @@
+---
+config:
+  layout: elk
+---
+sequenceDiagram
+    actor Estudante
+    participant Tela as :TelaDeReserva
+    participant Controlador as :ControladorDeReserva
+    participant Livro as :Livro
+    participant Cadastro as :CadastroDeEstudante
+
+    Estudante->>Tela: reservar()
+    activate Tela
+    Tela->>Controlador: solicitarReserva(livro)
+    activate Controlador
+    Controlador->>Livro: verificarDisponibilidade()
+    activate Livro
+    Livro-->>Controlador: disponível: true
+    deactivate Livro
+    Controlador->>Cadastro: verificarPendencias(Estudante)
+    activate Cadastro
+    Cadastro-->>Controlador: semPendencias: true
+    deactivate Cadastro
+    Controlador->>Controlador: registrarReserva()
+    Controlador->>Controlador: atualizarStatusLivro()
+    Controlador-->>Tela: reservaRealizada()
+    deactivate Controlador
+    Tela-->>Estudante: exibirMensagemSucesso()
+    deactivate Tela
