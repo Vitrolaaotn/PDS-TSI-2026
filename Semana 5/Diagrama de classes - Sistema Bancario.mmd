@@ -1,0 +1,47 @@
+---
+config:
+  layout: elk
+  theme: mc
+---
+graph TD
+    Cliente[Cliente]
+    Funcionario[Funcionário do Banco]
+    CaixaEletronico[Caixa Eletrônico]
+    Sistema[Sistema Bancário]
+    ContaBancaria[Conta Bancária]
+    
+    Cliente -->|Solicita Abertura| Sistema
+    Cliente -->|Solicita Encerramento| Funcionario
+    Cliente -->|Usa| CaixaEletronico
+    Funcionario -->|Gerencia Contas| Sistema
+    Funcionario -->|Manutenção de Cadastro| Sistema
+    
+    CaixaEletronico -->|Depósito| ContaBancaria
+    CaixaEletronico -->|Saque| ContaBancaria
+    CaixaEletronico -->|Consulta Saldo| ContaBancaria
+    CaixaEletronico -->|Emite Extrato| ContaBancaria
+    
+    Sistema -->|Cria| ContaBancaria
+    Sistema -->|Encerra| ContaBancaria
+    
+    ContaBancaria -->|Pode ser| ContaComum[Conta Comum]
+    ContaBancaria -->|Pode ser| ContaEspecial[Conta Especial]
+    ContaBancaria -->|Pode ser| ContaPoupanca[Conta Poupança]
+    
+    ContaComum -->|Restrição| SemSaqueExtra[Sem saque extra]
+    ContaEspecial -->|Permite| SaqueComLimite[Saque extra até limite]
+    ContaPoupanca -->|Rende| Juros[Juros]
+    
+    classDef cliente fill:#f0f9ff,stroke:#38bdf8
+    classDef funcionario fill:#f0fdfa,stroke:#2dd4bf
+    classDef sistema fill:#eef2ff,stroke:#818cf8
+    classDef conta fill:#f7fee7,stroke:#a3e635
+    classDef operacao fill:#fff7ed,stroke:#fb923c
+    classDef tiposConta fill:#fef2f2,stroke:#f87171
+    
+    class Cliente cliente
+    class Funcionario funcionario
+    class CaixaEletronico,Sistema sistema
+    class ContaBancaria conta
+    class Depósito,Saque,Consulta operacao
+    class ContaComum,ContaEspecial,ContaPoupanca tiposConta
