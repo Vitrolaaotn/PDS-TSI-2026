@@ -1,0 +1,53 @@
+@startuml classes_ifbank_pix
+
+skinparam classAttributeIconSize 0
+
+class Cliente {
+  -nome: String
+  -cpf: String
+  -email: String
+  -senha: String
+  +autenticar(senha: String): boolean
+}
+
+class Conta {
+  -numero: String
+  -agencia: String
+  -saldo: double
+  +consultarSaldo(): double
+  +verificarSaldo(valor: double): boolean
+  +debitar(valor: double): boolean
+  +creditar(valor: double): void
+}
+
+class Transacao {
+  -valor: double
+  -data: DateTime
+  -tipo: String
+  -chaveDestino: String
+  +gerarComprovante(): String
+}
+
+class ChavePix {
+  -tipo: TipoChave
+  -valor: String
+  -dataCadastro: DateTime
+  -status: boolean
+  +ativar(): void
+  +inativar(): void
+}
+
+enum TipoChave {
+  CPF
+  CNPJ
+  EMAIL
+  TELEFONE
+  ALEATORIA
+}
+
+Cliente "1" --> "1..*" Conta : possui
+Conta "1" --> "0..*" Transacao : extrato
+Conta "1" --> "0..*" ChavePix : cadastra
+ChavePix ..> TipoChave : tipo
+
+@enduml
