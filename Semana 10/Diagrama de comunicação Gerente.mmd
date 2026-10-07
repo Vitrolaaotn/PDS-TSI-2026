@@ -1,0 +1,23 @@
+flowchart LR
+    G(["Gerente"])
+    C["<b>:ControladorGerente</b>"]
+    CAT["<b>:Catalogo</b>"]
+    P["<b>:Produto</b>"]
+    PED["<b>:Pedido</b>"]
+
+    G -->|"1: cadastrarProduto()"| C
+    C -->|"1.1  «create» Produto()"| P
+    C -->|"1.2  adicionar()"| CAT
+
+    G -->|"2: alterarPreco()"| C
+    C -->|"2.1: definirPreco()"| P
+
+    G -->|"3: atualizarEstoque()"| C
+    C -->|"3.1 [entrada]: aumentarEstoque()"| P
+    C -->|"3.2 [saída]: diminuirEstoque()"| P
+
+    G -->|"4: removerProduto()"| C
+    C -->|"4.1: desativar()"| P
+
+    G -->|"5: consultarVendas()"| C
+    C -->|"5.1 *[para cada pedido]: getTotal()"| PED
